@@ -14,9 +14,12 @@ class Game:
                 row.append([])
             board.append(row)
 
+        board[0] = []
+        board[7] = []
+
         for i in range(8):
-            board[1][i] = Pawn()
-            board[6][i] = Pawn()
+            board[1][i] = Pawn(0)
+            board[6][i] = Pawn(1)
         return board
 
     def __init__(self):
@@ -24,9 +27,13 @@ class Game:
         self.board = self.build_board()
 
 
-c = Game()
-print(c.name)
+# c = Game()
+# print(c.name)
 # print(c.board)
 
-p = Pawn()
+x = Piece(0)
+print(x.name)
+
+p = Pawn(0)
 print(p.name)
+print(p.color)

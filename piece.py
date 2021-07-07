@@ -1,6 +1,8 @@
 class Piece:
-    def __init__(self):
-        self.name = "x"
 
-    def test(self):
-        print("Testing")
+    names = ["X", "x"]
+
+    def __init__(self, color):
+        print()
+        self.color = color
+        self.name = self.names[color]
