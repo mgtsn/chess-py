@@ -1,5 +1,5 @@
-from piece import *
-from pawn import *
+from pieces import piece
+from pieces.pawn import *
 
 
 class Game:
