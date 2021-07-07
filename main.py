@@ -1,5 +1,4 @@
-from pieces import piece
-from pieces.pawn import *
+from pieces import Piece, Pawn, King, Queen, Rook, Knight, Bishop
 
 
 class Game:
@@ -14,8 +13,10 @@ class Game:
                 row.append([])
             board.append(row)
 
-        board[0] = []
-        board[7] = []
+        board[7] = [Rook(0), Knight(0), Bishop(0), King(
+            0), Queen(0), Bishop(0), Knight(0), Rook(0)]
+        board[0] = [Rook(1), Knight(1), Bishop(1), King(
+            1), Queen(1), Bishop(1), Knight(1), Rook(1)]
 
         for i in range(8):
             board[1][i] = Pawn(0)
@@ -23,17 +24,14 @@ class Game:
         return board
 
     def __init__(self):
-        self.name = "board"
+        self.current_player = 0
         self.board = self.build_board()
 
+    def turn(self):
+        print(f"current player: {self.current_player}")
+        self.current_player = (self.current_player + 1) % 2
 
-# c = Game()
-# print(c.name)
-# print(c.board)
 
-x = Piece(0)
-print(x.name)
-
-p = Pawn(0)
-print(p.name)
-print(p.color)
+g = Game()
+for _ in range(5):
+    g.turn()
