@@ -1,5 +1,7 @@
+import re
 from pieces import Game
 
 
 g = Game()
-g.print_board()
+for _ in range(4):
+    g.play()

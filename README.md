@@ -1,1 +1,1 @@
-# chess-py
+# A game of chess played in the command line

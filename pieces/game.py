@@ -1,4 +1,6 @@
 from . import *
+import re
+
 
 class Game:
 
@@ -26,6 +28,7 @@ class Game:
         self.current_player = 0
         self.board = self.build_board()
 
+    # display the board using the names of pieces, O for empty square
     def print_board(self):
         for row in self.board:
             p = ""
@@ -36,6 +39,21 @@ class Game:
                     p += "O "
             print(p)
 
-    def turn(self):
-        print(f"current player: {self.current_player}")
+    # change which player is currently active
+    def switch_player(self):
         self.current_player = (self.current_player + 1) % 2
+
+    def format_move(self, m):
+        if not re.fullmatch("\w\d\s\w\d", m):
+            print("Invalid entry")
+            return([])
+        m = m.split()
+        print(m)
+        return(m)
+
+    def play(self):
+        print(f"Player {self.current_player + 1}'s turn")
+        player_move = []
+        while not player_move:
+            player_move = self.format_move(input("Enter your move: "))
+        self.switch_player()
