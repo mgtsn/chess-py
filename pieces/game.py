@@ -44,12 +44,13 @@ class Game:
         self.current_player = (self.current_player + 1) % 2
 
     def format_move(self, m):
-        if not re.fullmatch("\w\d\s\w\d", m):
-            print("Invalid entry")
-            return([])
-        m = m.split()
+        formatted_move = []
+        if re.fullmatch("\w\d\s\w\d", m):
+            # m = m.split()
+            for i in m:
+                print(f"I: {i}")
         print(m)
-        return(m)
+        return(formatted_move)
 
     def play(self):
         print(f"Player {self.current_player + 1}'s turn")
