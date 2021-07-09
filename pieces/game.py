@@ -43,18 +43,35 @@ class Game:
     def switch_player(self):
         self.current_player = (self.current_player + 1) % 2
 
+    # check player input is in correct format, then comvert to a pair of tuples of ints
     def format_move(self, m):
         formatted_move = []
         if re.fullmatch("\w\d\s\w\d", m):
-            # m = m.split()
+            m = m.split()
             for i in m:
-                print(f"I: {i}")
-        print(m)
-        return(formatted_move)
+                m1 = ord(i[0].lower()) - 97
+                m2 = int(i[1]) - 1
+                if m1 < 0 or m1 > 7 or m2 < 0 or m2 > 7:
+                    return
+                formatted_move.append([m1, m2])
+        return formatted_move
 
+    # determine if given move is legal in rules of the game
+    def legal_move(self, move):
+        return True
+
+    # loop through player's turns taking input until game is finished
     def play(self):
-        print(f"Player {self.current_player + 1}'s turn")
-        player_move = []
-        while not player_move:
-            player_move = self.format_move(input("Enter your move: "))
-        self.switch_player()
+        playing = True
+        while playing:
+            self.print_board()
+            print(f"Player {self.current_player + 1}'s turn")
+
+            player_move = []
+            while not player_move:
+                player_move = self.format_move(input("Enter your move: "))
+                if not self.legal_move(player_move):
+                    player_move = []
+
+            print(player_move)
+            self.switch_player()
