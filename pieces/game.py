@@ -14,14 +14,14 @@ class Game:
                 row.append([])
             board.append(row)
 
-        board[7] = [Rook(0), Knight(0), Bishop(0), King(
+        board[0] = [Rook(0), Knight(0), Bishop(0), King(
             0), Queen(0), Bishop(0), Knight(0), Rook(0)]
-        board[0] = [Rook(1), Knight(1), Bishop(1), King(
+        board[7] = [Rook(1), Knight(1), Bishop(1), King(
             1), Queen(1), Bishop(1), Knight(1), Rook(1)]
 
         for i in range(8):
-            board[6][i] = Pawn(0)
-            board[1][i] = Pawn(1)
+            board[1][i] = Pawn(0)
+            board[6][i] = Pawn(1)
         return board
 
     def __init__(self):
@@ -30,7 +30,7 @@ class Game:
 
     # display the board using the names of pieces, O for empty square
     def print_board(self):
-        for row in self.board:
+        for row in reversed(self.board):
             p = ""
             for i in row:
                 try:
@@ -57,8 +57,13 @@ class Game:
         return formatted_move
 
     # determine if given move is legal in rules of the game
-    def legal_move(self, move):
+    def legal_move(self, current, target):
+        moving_piece = self.board[current[1]][current[0]]
+        print(moving_piece.name)
         return True
+
+    def make_move(self, move):
+        print("making move")
 
     # loop through player's turns taking input until game is finished
     def play(self):
@@ -67,11 +72,14 @@ class Game:
             self.print_board()
             print(f"Player {self.current_player + 1}'s turn")
 
-            player_move = []
-            while not player_move:
-                player_move = self.format_move(input("Enter your move: "))
-                if not self.legal_move(player_move):
-                    player_move = []
+            getting_input = True
+            while getting_input:
+                player_move = []
+                while not player_move:
+                    player_move = self.format_move(input("Enter your move: "))
+                if self.legal_move(player_move[0], player_move[1]):
+                    self.make_move(player_move)
+                    getting_input = False
 
             print(player_move)
             self.switch_player()
