@@ -52,18 +52,33 @@ class Game:
                 m1 = ord(i[0].lower()) - 97
                 m2 = int(i[1]) - 1
                 if m1 < 0 or m1 > 7 or m2 < 0 or m2 > 7:
+                    print("Out of Range")
                     return
                 formatted_move.append([m1, m2])
+        else:
+            print("Incorrect Format")
         return formatted_move
 
     # determine if given move is legal in rules of the game
-    def legal_move(self, current, target):
+    def legal_move(self, move):
+        current = move[0]
+        target = move[1]
         moving_piece = self.board[current[1]][current[0]]
-        print(moving_piece.name)
+        if not moving_piece:
+            print("No piece at that location")
+            return
+        if not moving_piece.color == self.current_player:
+            print("Not your piece")
+            return
+        print(f"moving piece: {moving_piece.name}")
         return True
 
     def make_move(self, move):
-        print("making move")
+        current = move[0]
+        target = move[1]
+        print(f"current: {current}")
+        self.board[target[1]][target[0]] = self.board[current[1]][current[0]]
+        self.board[current[1]][current[0]] = []
 
     # loop through player's turns taking input until game is finished
     def play(self):
@@ -72,14 +87,14 @@ class Game:
             self.print_board()
             print(f"Player {self.current_player + 1}'s turn")
 
-            getting_input = True
-            while getting_input:
+            move_made = True
+            while move_made:
                 player_move = []
                 while not player_move:
                     player_move = self.format_move(input("Enter your move: "))
-                if self.legal_move(player_move[0], player_move[1]):
+                if self.legal_move(player_move):
                     self.make_move(player_move)
-                    getting_input = False
+                    move_made = False
 
             print(player_move)
             self.switch_player()
