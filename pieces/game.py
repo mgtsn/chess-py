@@ -54,7 +54,7 @@ class Game:
                 if m1 < 0 or m1 > 7 or m2 < 0 or m2 > 7:
                     print("Out of Range")
                     return
-                formatted_move.append([m1, m2])
+                formatted_move.append([m2, m1])
         else:
             print("Incorrect Format")
         return formatted_move
@@ -63,22 +63,40 @@ class Game:
     def legal_move(self, move):
         current = move[0]
         target = move[1]
-        moving_piece = self.board[current[1]][current[0]]
+        moving_piece = self.board[current[0]][current[1]]
+        target_piece = self.board[target[0]][target[1]]
+
         if not moving_piece:
             print("No piece at that location")
-            return
+            return False
+
         if not moving_piece.color == self.current_player:
             print("Not your piece")
-            return
-        print(f"moving piece: {moving_piece.name}")
+            return False
+
+        if not moving_piece.can_make_move(self.board, move):
+            print("Illegal Move")
+            return False
+
+        if target_piece != []:
+            if target_piece.color == self.current_player:
+                print("Illegal Move")
+                return False
         return True
 
     def make_move(self, move):
         current = move[0]
         target = move[1]
-        print(f"current: {current}")
-        self.board[target[1]][target[0]] = self.board[current[1]][current[0]]
-        self.board[current[1]][current[0]] = []
+        self.board[target[0]][target[1]] = self.board[current[0]][current[1]]
+        self.board[current[0]][current[1]] = []
+
+    def get_player_move(self):
+        while True:
+            player_move = []
+            while not player_move:
+                player_move = self.format_move(input("Enter your move: "))
+            if self.legal_move(player_move):
+                return player_move
 
     # loop through player's turns taking input until game is finished
     def play(self):
@@ -87,14 +105,7 @@ class Game:
             self.print_board()
             print(f"Player {self.current_player + 1}'s turn")
 
-            move_made = True
-            while move_made:
-                player_move = []
-                while not player_move:
-                    player_move = self.format_move(input("Enter your move: "))
-                if self.legal_move(player_move):
-                    self.make_move(player_move)
-                    move_made = False
+            player_move = self.get_player_move()
+            self.make_move(player_move)
 
-            print(player_move)
             self.switch_player()
