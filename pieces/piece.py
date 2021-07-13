@@ -37,6 +37,18 @@ class Piece:
                 return False
         return True
 
+    def diagonal_movement(self, board, move):
+        current = move[0]
+        target = move[1]
+
+        diff_x = abs(current[0] - target[0])
+        diff_y = abs(current[1] - target[1])
+
+        if diff_x != diff_y:
+            return False
+
+        return True
+
     def can_make_move(self, board, move):
         print("Can make move?")
         return True
