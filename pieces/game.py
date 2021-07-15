@@ -34,13 +34,29 @@ class Game:
     # display the board using the names of pieces, O for empty square
     def print_board(self):
         for j in reversed(range(8)):
-            p = ""
+            p = f"{j + 1} | "
             for i in range(8):
                 try:
                     p += f"{self.board[i][j].name} "
                 except:
                     p += "O "
             print(p)
+        print("    - - - - - - - - ")
+        print("    A B C D E F G H ")
+
+    # returns a list holding all pieces of given color
+    def get_pieces(self, player):
+        pieces = []
+        for i in self.board:
+            for j in i:
+                if j != []:
+                    if j.color == player:
+                        pieces.append(j)
+        return pieces
+
+    def in_check(self, player):
+        pieces = get_pieces(self.player)
+        return True
 
     # change which player is currently active
     def switch_player(self):

@@ -1,4 +1,7 @@
 from pieces import Game
 
 g = Game()
-g.play()
+# g.play()
+
+for p in g.get_pieces(1):
+    print(p.name)
