@@ -11,4 +11,4 @@ class King(Piece):
         diff_x = abs(current[0] - target[0])
         diff_y = abs(current[1] - target[1])
 
-        return(diff_x >= 1 and diff_y >= 1)
+        return(diff_x <= 1 and diff_y <= 1)

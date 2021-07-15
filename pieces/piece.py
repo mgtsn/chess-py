@@ -41,8 +41,14 @@ class Piece:
         current = move[0]
         target = move[1]
 
-        diff_x = abs(current[0] - target[0])
-        diff_y = abs(current[1] - target[1])
+        diff_x = abs(current[1] - target[1])
+        diff_y = abs(current[0] - target[0])
+
+        dir_x = target[1] - current[1]
+        dir_y = target[0] - current[0]
+
+        print(f"dir_x: {dir_x}")
+        print(f"dir_y: {dir_y}")
 
         if diff_x != diff_y:
             return False
