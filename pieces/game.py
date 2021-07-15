@@ -14,14 +14,17 @@ class Game:
                 row.append([])
             board.append(row)
 
-        board[0] = [Rook(0), Knight(0), Bishop(0), King(
+        white_pieces = [Rook(0), Knight(0), Bishop(0), King(
             0), Queen(0), Bishop(0), Knight(0), Rook(0)]
-        board[7] = [Rook(1), Knight(1), Bishop(1), King(
+        black_pieces = [Rook(1), Knight(1), Bishop(1), King(
             1), Queen(1), Bishop(1), Knight(1), Rook(1)]
 
         for i in range(8):
-            board[1][i] = Pawn(0)
-            board[6][i] = Pawn(1)
+            board[i][0] = white_pieces[i]
+            board[i][7] = black_pieces[i]
+
+            board[i][1] = Pawn(0)
+            board[i][6] = Pawn(1)
         return board
 
     def __init__(self):
@@ -30,11 +33,11 @@ class Game:
 
     # display the board using the names of pieces, O for empty square
     def print_board(self):
-        for row in reversed(self.board):
+        for j in reversed(range(8)):
             p = ""
-            for i in row:
+            for i in range(8):
                 try:
-                    p += f"{i.name} "
+                    p += f"{self.board[i][j].name} "
                 except:
                     p += "O "
             print(p)
@@ -54,7 +57,7 @@ class Game:
                 if m1 < 0 or m1 > 7 or m2 < 0 or m2 > 7:
                     print("Out of Range")
                     return
-                formatted_move.append([m2, m1])
+                formatted_move.append([m1, m2])
         else:
             print("Incorrect Format")
         return formatted_move
@@ -84,6 +87,7 @@ class Game:
                 return False
         return True
 
+    # makes the move, updating piece locations
     def make_move(self, move):
         current = move[0]
         target = move[1]
@@ -96,16 +100,21 @@ class Game:
             while not player_move:
                 player_move = self.format_move(input("Enter your move: "))
             if self.legal_move(player_move):
-                return player_move
+                self.make_move(player_move)
+                return
+
+    def game_finished(self):
+        return False
 
     # loop through player's turns taking input until game is finished
     def play(self):
-        playing = True
-        while playing:
+        finished = False
+        while not finished:
             self.print_board()
             print(f"Player {self.current_player + 1}'s turn")
 
-            player_move = self.get_player_move()
-            self.make_move(player_move)
+            self.get_player_move()
 
             self.switch_player()
+
+            finished = self.game_finished()
