@@ -54,8 +54,18 @@ class Game:
                         pieces.append(j)
         return pieces
 
-    def in_check(self, player):
-        pieces = get_pieces(self.player)
+    def find_king(self, player):
+        for i in range(8):
+            for j in range(8):
+                p = self.board[i][j]
+                if type(p) == King:
+                    if p.color == player:
+                        return [i, j]
+        return 0
+
+    def in_check(self):
+        pieces = get_pieces((self.current_player + 1) % 2)
+        king_location = self.find_king(self.current_player)
         return True
 
     # change which player is currently active
