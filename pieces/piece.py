@@ -2,9 +2,10 @@ class Piece:
 
     names = ["X", "x"]
 
-    def __init__(self, color):
+    def __init__(self, color, position):
         self.color = color
         self.name = self.names[color]
+        self.position = position
 
     def horizontal_movement(self, board, move):
         current = move[0]
@@ -64,3 +65,7 @@ class Piece:
 
     def can_make_move(self, board, move):
         return True
+
+    def legal_moves(self, board):
+        print(f"legal moves from {self.position}")
+        return []

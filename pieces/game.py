@@ -1,7 +1,6 @@
 from . import *
 import re
 
-
 class Game:
 
     # create the chess board and populate with starting layout
@@ -14,17 +13,14 @@ class Game:
                 row.append([])
             board.append(row)
 
-        white_pieces = [Rook(0), Knight(0), Bishop(0), King(
-            0), Queen(0), Bishop(0), Knight(0), Rook(0)]
-        black_pieces = [Rook(1), Knight(1), Bishop(1), King(
-            1), Queen(1), Bishop(1), Knight(1), Rook(1)]
+        piece_order = [Rook, Knight, Bishop, King, Queen, Bishop, Knight, Rook]
 
         for i in range(8):
-            board[i][0] = white_pieces[i]
-            board[i][7] = black_pieces[i]
+            board[i][0] = piece_order[i](0, [i, 0])
+            board[i][7] = piece_order[i](1, [i, 7])
 
-            board[i][1] = Pawn(0)
-            board[i][6] = Pawn(1)
+            board[i][1] = Pawn(0, [i, 1])
+            board[i][6] = Pawn(1, [i, 6])
         return board
 
     def __init__(self):
@@ -95,6 +91,8 @@ class Game:
         moving_piece = self.board[current[0]][current[1]]
         target_piece = self.board[target[0]][target[1]]
 
+        moving_piece.legal_moves(self.board)
+
         if not moving_piece:
             print("No piece at that location")
             return False
@@ -125,6 +123,7 @@ class Game:
             player_move = []
             while not player_move:
                 player_move = self.format_move(input("Enter your move: "))
+            print(f"Player move: {player_move}")
             if self.legal_move(player_move):
                 self.make_move(player_move)
                 return
@@ -143,4 +142,5 @@ class Game:
 
             self.switch_player()
 
-            finished = self.game_finished()
+            # finished = True
+
