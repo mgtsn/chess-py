@@ -14,10 +14,26 @@ class Game:
                 row.append([])
             board.append(row)
 
-        white_pieces = [Rook(0), Knight(0), Bishop(0), King(
-            0), Queen(0), Bishop(0), Knight(0), Rook(0)]
-        black_pieces = [Rook(1), Knight(1), Bishop(1), King(
-            1), Queen(1), Bishop(1), Knight(1), Rook(1)]
+        white_pieces = [
+            Rook(0),
+            Knight(0),
+            Bishop(0),
+            King(0),
+            Queen(0),
+            Bishop(0),
+            Knight(0),
+            Rook(0)
+        ]
+        black_pieces = [
+            Rook(1),
+            Knight(1),
+            Bishop(1),
+            King(1),
+            Queen(1),
+            Bishop(1),
+            Knight(1),
+            Rook(1)
+        ]
 
         for i in range(8):
             board[i][0] = white_pieces[i]
@@ -94,6 +110,10 @@ class Game:
         target = move[1]
         moving_piece = self.board[current[0]][current[1]]
         target_piece = self.board[target[0]][target[1]]
+
+        print(
+            f"possible moves: {moving_piece.moves_from_position(self.board, current)}"
+        )
 
         if not moving_piece:
             print("No piece at that location")
