@@ -1,6 +1,7 @@
 from . import *
 import re
 
+
 class Game:
 
     # create the chess board and populate with starting layout
@@ -8,35 +9,12 @@ class Game:
         board = []
         # makes empty board
         for i in range(8):
-            row = []
+            column = []
             for j in range(8):
-                row.append([])
-            board.append(row)
+                column.append([])
+            board.append(column)
 
-<<<<<<< HEAD
-        white_pieces = [
-            Rook(0),
-            Knight(0),
-            Bishop(0),
-            King(0),
-            Queen(0),
-            Bishop(0),
-            Knight(0),
-            Rook(0)
-        ]
-        black_pieces = [
-            Rook(1),
-            Knight(1),
-            Bishop(1),
-            King(1),
-            Queen(1),
-            Bishop(1),
-            Knight(1),
-            Rook(1)
-        ]
-=======
         piece_order = [Rook, Knight, Bishop, King, Queen, Bishop, Knight, Rook]
->>>>>>> 19c7bcd748b47b7e4d5cd6087961520bbf67a65c
 
         for i in range(8):
             board[i][0] = piece_order[i](0, [i, 0])
@@ -114,13 +92,9 @@ class Game:
         moving_piece = self.board[current[0]][current[1]]
         target_piece = self.board[target[0]][target[1]]
 
-<<<<<<< HEAD
         print(
             f"possible moves: {moving_piece.moves_from_position(self.board, current)}"
         )
-=======
-        moving_piece.legal_moves(self.board)
->>>>>>> 19c7bcd748b47b7e4d5cd6087961520bbf67a65c
 
         if not moving_piece:
             print("No piece at that location")
@@ -172,4 +146,3 @@ class Game:
             self.switch_player()
 
             # finished = True
-
