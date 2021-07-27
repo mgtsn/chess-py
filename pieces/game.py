@@ -51,19 +51,26 @@ class Game:
                         pieces.append(j)
         return pieces
 
-    def find_king(self, player):
+    def find_king(self, player, board):
         for i in range(8):
             for j in range(8):
-                p = self.board[i][j]
+                p = board[i][j]
                 if type(p) == King:
                     if p.color == player:
                         return [i, j]
         return 0
 
-    def in_check(self):
-        pieces = get_pieces((self.current_player + 1) % 2)
-        king_location = self.find_king(self.current_player)
-        return True
+    def in_check(self, board, player):
+        king_location = self.find_king(player, board)
+        for i in range(8):
+            for j in range(8):
+                current_piece = board[i][j]
+                if current_piece != []:
+                    if current_piece.color == player:
+                        if current_piece.can_make_move(
+                                board, [[i, j], king_location]):
+                            return True
+        return False
 
     # change which player is currently active
     def switch_player(self):
@@ -84,6 +91,14 @@ class Game:
         else:
             print("Incorrect Format")
         return formatted_move
+
+    # makes the move, updating piece locations
+    def make_move(self, board, move):
+        current = move[0]
+        target = move[1]
+        board[target[0]][target[1]] = board[current[0]][current[1]]
+        board[current[0]][current[1]] = []
+        return board
 
     # determine if given move is legal in rules of the game
     def legal_move(self, move):
@@ -112,14 +127,13 @@ class Game:
             if target_piece.color == self.current_player:
                 print("Illegal Move")
                 return False
-        return True
 
-    # makes the move, updating piece locations
-    def make_move(self, move):
-        current = move[0]
-        target = move[1]
-        self.board[target[0]][target[1]] = self.board[current[0]][current[1]]
-        self.board[current[0]][current[1]] = []
+        new_board = self.board
+        new_board = make_move(move, new_board)
+        if in_check(new_board, self.current_player):
+            print("That move puts you in check")
+            return False
+        return True
 
     def get_player_move(self):
         while True:
@@ -128,7 +142,7 @@ class Game:
                 player_move = self.format_move(input("Enter your move: "))
             print(f"Player move: {player_move}")
             if self.legal_move(player_move):
-                self.make_move(player_move)
+                self.board = make_move(player_move, self.board)
                 return
 
     def game_finished(self):
