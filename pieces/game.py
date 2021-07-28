@@ -1,5 +1,6 @@
 from . import *
 import re
+import copy
 
 
 class Game:
@@ -93,12 +94,13 @@ class Game:
         return formatted_move
 
     # makes the move, updating piece locations
-    def make_move(self, board, move):
+    def make_move(self, move):
+        new_board = copy.deepcopy(self.board)
         current = move[0]
         target = move[1]
-        board[target[0]][target[1]] = board[current[0]][current[1]]
-        board[current[0]][current[1]] = []
-        return board
+        new_board[target[0]][target[1]] = new_board[current[0]][current[1]]
+        new_board[current[0]][current[1]] = []
+        return new_board
 
     # determine if given move is legal in rules of the game
     def legal_move(self, move):
@@ -115,7 +117,7 @@ class Game:
             print("No piece at that location")
             return False
 
-        if not moving_piece.color == self.current_player:
+        if moving_piece.color != self.current_player:
             print("Not your piece")
             return False
 
@@ -128,11 +130,11 @@ class Game:
                 print("Illegal Move")
                 return False
 
-        new_board = self.board
-        new_board = make_move(move, new_board)
-        if in_check(new_board, self.current_player):
-            print("That move puts you in check")
-            return False
+        # new_board = self.board
+        # new_board = make_move(move, new_board)
+        # if in_check(new_board, self.current_player):
+        #     print("That move puts you in check")
+        #     return False
         return True
 
     def get_player_move(self):
@@ -142,7 +144,7 @@ class Game:
                 player_move = self.format_move(input("Enter your move: "))
             print(f"Player move: {player_move}")
             if self.legal_move(player_move):
-                self.board = make_move(player_move, self.board)
+                self.board = self.make_move(player_move)
                 return
 
     def game_finished(self):

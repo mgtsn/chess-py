@@ -14,7 +14,8 @@ class Piece:
         if current[1] != target[1]:
             return False
 
-        for i in range(min(current[0], target[0]) + 1, max(current[0], target[0])):
+        for i in range(
+                min(current[0], target[0]) + 1, max(current[0], target[0])):
             n = board[i][current[1]]
             if n != []:
                 return False
@@ -27,14 +28,16 @@ class Piece:
         if current[0] != target[0]:
             return False
 
-        for i in range(min(current[1], target[1]) + 1, max(current[1], target[1])):
+        for i in range(
+                min(current[1], target[1]) + 1, max(current[1], target[1])):
             n = board[current[0]][i]
             if n != []:
                 return False
         return True
 
     def straight_movement(self, board, move):
-        return self.vertical_movement(board, move) and self.horizontal_movement(board, move)
+        return self.vertical_movement(
+            board, move) and self.horizontal_movement(board, move)
 
     def diagonal_movement(self, board, move):
         current = move[0]
