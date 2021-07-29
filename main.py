@@ -2,7 +2,9 @@ from pieces import Game
 import copy
 
 g = Game()
-g.play()
+# g.play()
 
-# print(g.find_king(0))
-# print(g.find_king(1))
+print(g.board[0][1].moves_from_position(g.board, [0, 1]))
+
+a = [[0, 1], [1, 2]]
+print(a.__contains__([0, 1]))

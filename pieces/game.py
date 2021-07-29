@@ -130,6 +130,11 @@ class Game:
                 print("Illegal Move")
                 return False
 
+        if not moving_piece.moves_from_position(self.board,
+                                                current).__contains__(target):
+            print("Illegal Move")
+            return False
+
         # new_board = self.board
         # new_board = make_move(move, new_board)
         # if in_check(new_board, self.current_player):
