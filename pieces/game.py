@@ -52,6 +52,16 @@ class Game:
                         pieces.append(j)
         return pieces
 
+        # returns a copy of the board with given move made
+    def make_move(self, move):
+        new_board = copy.deepcopy(self.board)
+        current = move[0]
+        target = move[1]
+        new_board[target[0]][target[1]] = new_board[current[0]][current[1]]
+        new_board[current[0]][current[1]] = []
+        return new_board
+
+    #return location of given player's king
     def find_king(self, player, board):
         for i in range(8):
             for j in range(8):
@@ -61,17 +71,33 @@ class Game:
                         return [i, j]
         return 0
 
+    #Check if any of opponent's pieces can move to current player's king
     def in_check(self, board, player):
         king_location = self.find_king(player, board)
         for i in range(8):
             for j in range(8):
                 current_piece = board[i][j]
                 if current_piece != []:
-                    if current_piece.color == player:
-                        if current_piece.can_make_move(
-                                board, [[i, j], king_location]):
+                    if current_piece.color != player:
+                        if current_piece.moves_from_position(
+                                board, [i, j]).__contains__(king_location):
                             return True
         return False
+
+    #look at each move each of your pieces can make. If one moves you out of check, you are not in checkmate
+    def in_checkmate(self, board, player):
+        for i in range(8):
+            for j in range(8):
+                current_piece = board[i][j]
+                if current_piece != []:
+                    if current_piece.color == player:
+                        possible_moves = current_piece.moves_from_position(
+                            board, [i, j])
+                        for move in possible_moves:
+                            new_board = self.make_move(board, [[i, j], move])
+                            if not in_check(new_board, player):
+                                return False
+        return True
 
     # change which player is currently active
     def switch_player(self):
@@ -92,15 +118,6 @@ class Game:
         else:
             print("Incorrect Format")
         return formatted_move
-
-    # makes the move, updating piece locations
-    def make_move(self, move):
-        new_board = copy.deepcopy(self.board)
-        current = move[0]
-        target = move[1]
-        new_board[target[0]][target[1]] = new_board[current[0]][current[1]]
-        new_board[current[0]][current[1]] = []
-        return new_board
 
     # determine if given move is legal in rules of the game
     def legal_move(self, move):
