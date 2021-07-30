@@ -1,11 +1,13 @@
+import copy
+
+
 class Piece:
 
     names = ["X", "x"]
 
-    def __init__(self, color, position):
+    def __init__(self, color):
         self.color = color
         self.name = self.names[color]
-        self.position = position
 
     def horizontal_movement(self, board, move):
         current = move[0]
@@ -69,6 +71,50 @@ class Piece:
     def can_make_move(self, board, move):
         return True
 
+    def vertical_moves_from_position(self, board, position):
+        moves = []
+        for i in [-1, 1]:
+            y_branch = copy.copy(position)
+            searching = True
+            while searching:
+                y_branch[1] += i
+                if y_branch[1] > 7 or y_branch[1] < 0:
+                    searching = False
+                else:
+                    current_square = board[y_branch[0]][y_branch[1]]
+                    if current_square == []:
+                        moves.append(copy.copy(y_branch))
+                    elif current_square.color == self.color:
+                        searching = False
+                    else:
+                        moves.append(y_branch)
+                        searching = False
+        return moves
+
+    def horizontal_moves_from_position(self, board, position):
+        moves = []
+        for i in [-1, 1]:
+            x_branch = copy.copy(position)
+            searching = True
+            while searching:
+                x_branch[0] += i
+                if x_branch[0] > 7 or x_branch[0] < 0:
+                    searching = False
+                else:
+                    current_square = board[x_branch[0]][x_branch[1]]
+                    if current_square == []:
+                        moves.append(copy.copy(x_branch))
+                    elif current_square.color == self.color:
+                        searching = False
+                    else:
+                        moves.append(x_branch)
+                        searching = False
+        return moves
+
+    def straight_moves_from_position(self, board, position):
+        return self.vertical_moves_from_position(
+            board, position) + self.horizontal_moves_from_position(
+                board, position)
+
     def legal_moves(self, board):
-        print(f"legal moves from {self.position}")
         return []

@@ -18,11 +18,11 @@ class Game:
         piece_order = [Rook, Knight, Bishop, King, Queen, Bishop, Knight, Rook]
 
         for i in range(8):
-            board[i][0] = piece_order[i](0, [i, 0])
-            board[i][7] = piece_order[i](1, [i, 7])
+            board[i][0] = piece_order[i](0)
+            board[i][7] = piece_order[i](1)
 
-            board[i][1] = Pawn(0, [i, 1])
-            board[i][6] = Pawn(1, [i, 6])
+            board[i][1] = Pawn(0)
+            board[i][6] = Pawn(1)
         return board
 
     def __init__(self):
