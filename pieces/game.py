@@ -52,7 +52,7 @@ class Game:
                         pieces.append(j)
         return pieces
 
-        # returns a copy of the board with given move made
+    # returns a copy of the board with given move made
     def make_move(self, move):
         new_board = copy.deepcopy(self.board)
         current = move[0]
@@ -119,16 +119,16 @@ class Game:
             print("Incorrect Format")
         return formatted_move
 
+    def puts_self_in_check(self, move, player):
+        new_board = self.make_move(self.board)
+        return in_check(new_board, player)
+
     # determine if given move is legal in rules of the game
     def legal_move(self, move):
         current = move[0]
         target = move[1]
         moving_piece = self.board[current[0]][current[1]]
         target_piece = self.board[target[0]][target[1]]
-
-        print(
-            f"possible moves: {moving_piece.moves_from_position(self.board, current)}"
-        )
 
         if not moving_piece:
             print("No piece at that location")
@@ -137,15 +137,6 @@ class Game:
         if moving_piece.color != self.current_player:
             print("Not your piece")
             return False
-
-        if not moving_piece.can_make_move(self.board, move):
-            print("Illegal Move")
-            return False
-
-        if target_piece != []:
-            if target_piece.color == self.current_player:
-                print("Illegal Move")
-                return False
 
         if not moving_piece.moves_from_position(self.board,
                                                 current).__contains__(target):
@@ -179,8 +170,10 @@ class Game:
             self.print_board()
             print(f"Player {self.current_player + 1}'s turn")
 
-            self.get_player_move()
+            print(self.board[0][1].moves_from_position(self.board, [0, 1]))
 
-            self.switch_player()
+            # self.get_player_move()
 
-            # finished = True
+            # self.switch_player()
+
+            finished = True

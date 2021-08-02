@@ -68,6 +68,16 @@ class Piece:
             current[1] += dir_y
         return True
 
+    def valid_target(self, board, position):
+        x = position[0]
+        y = position[1]
+        if range(0, 8).__contains__(x) and range(0, 8).__contains__(y):
+            target = board[x][y]
+            if target == []:
+                return True
+            elif target.color != self.color:
+                return True
+
     def can_make_move(self, board, move):
         return True
 
@@ -117,7 +127,20 @@ class Piece:
                 board, position)
 
     def diagonal_moves_from_position(self, board, position):
-        return ([])
+        moves = []
+        for x in [-1, 1]:
+            for y in [-1, 1]:
+                searching_branch = True
+                new_x_pos = position[0] + x
+                new_y_pos = position[1] + y
+                while searching_branch:
+                    if self.valid_target(board, [new_x_pos, new_y_pos]):
+                        moves.append([new_x_pos, new_y_pos])
+                        new_x_pos += 1
+                        new_y_pos += 1
+                    else:
+                        searching_branch = False
+        return moves
 
     def legal_moves(self, board):
         return []

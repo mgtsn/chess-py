@@ -19,11 +19,6 @@ class King(Piece):
             for y in range(-1, 2):
                 new_x_pos = position[0] + x
                 new_y_pos = position[1] + y
-                if range(0, 8).__contains__(new_x_pos) and range(
-                        0, 8).__contains__(new_y_pos):
-                    target = board[new_x_pos][new_y_pos]
-                    if target == []:
-                        moves.append([new_x_pos, new_y_pos])
-                    elif target.color != self.color:
-                        moves.append([new_x_pos, new_y_pos])
+                if self.valid_target(board, [new_x_pos, new_y_pos]):
+                   moves.append([new_x_pos, new_y_pos])
         return moves
