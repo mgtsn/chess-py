@@ -9,4 +9,4 @@ class Rook(Piece):
                 or self.horizontal_movement(board, move))
 
     def moves_from_position(self, board, position):
-        return (self.straight_moves_from_position(self, board, position))
+        return (self.straight_moves_from_position(board, position))

@@ -1,5 +1,5 @@
 from pieces import Game
 import copy
 
-# g = Game()
-# g.play()
+g = Game()
+g.play()

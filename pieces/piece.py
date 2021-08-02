@@ -136,8 +136,8 @@ class Piece:
                 while searching_branch:
                     if self.valid_target(board, [new_x_pos, new_y_pos]):
                         moves.append([new_x_pos, new_y_pos])
-                        new_x_pos += 1
-                        new_y_pos += 1
+                        new_x_pos += x
+                        new_y_pos += y
                     else:
                         searching_branch = False
         return moves

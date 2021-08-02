@@ -29,14 +29,21 @@ class Pawn(Piece):
         else:
             direction = -1
 
-        target = board[position[0]][position[1] + direction]
+        new_x_pos = position[0]
+        new_y_pos = position[1] + direction
+        if not range(0, 8).__contains__(new_y_pos):
+            return moves
+
+        target = board[new_x_pos][new_y_pos]
         if target == []:
-            moves.append([position[0], position[1] + direction])
+            moves.append([new_x_pos, new_y_pos])
 
         for i in [-1, 1]:
-            target = board[position[0] + i][position[1] + direction]
-            if target != []:
-                if target.color != self.color:
-                    moves.append([position[0] + i, position[1] + direction])
+            new_x_pos = position[0] + i
+            if range(0, 8).__contains__(new_x_pos):
+                target = board[new_x_pos][new_y_pos]
+                if target != []:
+                    if target.color != self.color:
+                        moves.append([new_x_pos, new_y_pos])
 
         return moves

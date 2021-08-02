@@ -74,6 +74,7 @@ class Game:
     #Check if any of opponent's pieces can move to current player's king
     def in_check(self, board, player):
         king_location = self.find_king(player, board)
+        print(f"finding if {player} is in check with king at {king_location}")
         for i in range(8):
             for j in range(8):
                 current_piece = board[i][j]
@@ -120,8 +121,9 @@ class Game:
         return formatted_move
 
     def puts_self_in_check(self, move, player):
-        new_board = self.make_move(self.board)
-        return in_check(new_board, player)
+        print(f"will put in check? {player} with move {move}")
+        new_board = self.make_move(move)
+        return self.in_check(new_board, player)
 
     # determine if given move is legal in rules of the game
     def legal_move(self, move):
@@ -138,16 +140,19 @@ class Game:
             print("Not your piece")
             return False
 
+        print(
+            f"moves from position: {moving_piece.moves_from_position(self.board, current)}"
+        )
+
         if not moving_piece.moves_from_position(self.board,
                                                 current).__contains__(target):
             print("Illegal Move")
             return False
 
-        # new_board = self.board
-        # new_board = make_move(move, new_board)
-        # if in_check(new_board, self.current_player):
-        #     print("That move puts you in check")
-        #     return False
+        if self.puts_self_in_check(move, self.current_player):
+            print("Puts you in check")
+            return False
+
         return True
 
     def get_player_move(self):
@@ -170,10 +175,8 @@ class Game:
             self.print_board()
             print(f"Player {self.current_player + 1}'s turn")
 
-            print(self.board[0][1].moves_from_position(self.board, [0, 1]))
+            self.get_player_move()
 
-            # self.get_player_move()
+            self.switch_player()
 
-            # self.switch_player()
-
-            finished = True
+            # finished = True

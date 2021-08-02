@@ -8,4 +8,4 @@ class Bishop(Piece):
         return self.diagonal_movement(board, move)
 
     def moves_from_position(self, board, position):
-        return self.diagonal_moves_from_position(self, board, position)
+        return self.diagonal_moves_from_position(board, position)

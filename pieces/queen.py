@@ -11,5 +11,5 @@ class Queen(Piece):
 
     def moves_from_position(self, board, position):
         return self.diagonal_moves_from_position(
-            self, board, position) + self.straight_moves_from_position(
-                self, board, position)
+            board, position) + self.straight_moves_from_position(
+                board, position)
