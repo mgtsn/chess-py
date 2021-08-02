@@ -116,5 +116,8 @@ class Piece:
             board, position) + self.horizontal_moves_from_position(
                 board, position)
 
+    def diagonal_moves_from_position(self, board, position):
+        return ([])
+
     def legal_moves(self, board):
         return []
