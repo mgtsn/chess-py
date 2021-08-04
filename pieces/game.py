@@ -32,6 +32,7 @@ class Game:
     # display the board using the names of pieces, O for empty square
     def print_board(self):
         squares = ["□", "■"]
+        print(f"   {'----' * 8}")
         for j in reversed(range(8)):
             p = f"{j + 1} | "
             for i in range(8):

@@ -1,5 +1,11 @@
 from pieces import Game
 import copy
 
-g = Game()
-g.play()
+
+def main():
+    game = Game()
+    game.print_board()
+
+
+if __name__ == "__main__":
+    main()
