@@ -31,16 +31,18 @@ class Game:
 
     # display the board using the names of pieces, O for empty square
     def print_board(self):
+        squares = ["□", "■"]
         for j in reversed(range(8)):
             p = f"{j + 1} | "
             for i in range(8):
                 try:
-                    p += f"{self.board[i][j].name} "
+                    p += f"{self.board[i][j].name} | "
                 except:
-                    p += "O "
+                    # p += f"{squares[(i + j)%2]} | "
+                    p += "  | "
             print(p)
-        print("    - - - - - - - - ")
-        print("    A B C D E F G H ")
+            print(f"   {'----' * 8}")
+        print("    A   B   C   D   E   F   G   H   ")
 
     # returns a list holding all pieces of given color
     def get_pieces(self, player):
@@ -74,7 +76,6 @@ class Game:
     #Check if any of opponent's pieces can move to current player's king
     def in_check(self, board, player):
         king_location = self.find_king(player, board)
-        print(f"finding if {player} is in check with king at {king_location}")
         for i in range(8):
             for j in range(8):
                 current_piece = board[i][j]
@@ -85,7 +86,7 @@ class Game:
                             return True
         return False
 
-    #look at each move each of your pieces can make. If one moves you out of check, you are not in checkmate
+    #look at each move each of player's pieces can make. If one moves out of check, then player is not in checkmate
     def in_checkmate(self, board, player):
         for i in range(8):
             for j in range(8):
@@ -95,8 +96,8 @@ class Game:
                         possible_moves = current_piece.moves_from_position(
                             board, [i, j])
                         for move in possible_moves:
-                            new_board = self.make_move(board, [[i, j], move])
-                            if not in_check(new_board, player):
+                            new_board = self.make_move([[i, j], move])
+                            if not self.in_check(new_board, player):
                                 return False
         return True
 
@@ -121,7 +122,6 @@ class Game:
         return formatted_move
 
     def puts_self_in_check(self, move, player):
-        print(f"will put in check? {player} with move {move}")
         new_board = self.make_move(move)
         return self.in_check(new_board, player)
 
@@ -140,10 +140,6 @@ class Game:
             print("Not your piece")
             return False
 
-        print(
-            f"moves from position: {moving_piece.moves_from_position(self.board, current)}"
-        )
-
         if not moving_piece.moves_from_position(self.board,
                                                 current).__contains__(target):
             print("Illegal Move")
@@ -160,7 +156,6 @@ class Game:
             player_move = []
             while not player_move:
                 player_move = self.format_move(input("Enter your move: "))
-            print(f"Player move: {player_move}")
             if self.legal_move(player_move):
                 self.board = self.make_move(player_move)
                 return
@@ -173,10 +168,15 @@ class Game:
         finished = False
         while not finished:
             self.print_board()
-            print(f"Player {self.current_player + 1}'s turn")
+            print(f"\nPlayer {self.current_player + 1}'s turn")
 
             self.get_player_move()
 
             self.switch_player()
 
-            # finished = True
+            if self.in_check(self.board, self.current_player):
+                if self.in_checkmate(self.board, self.current_player):
+                    print(f"Player {self.current_player + 1} in checkmate!")
+                    finished = True
+                else:
+                    print(f"Player {self.current_player} in check!")
