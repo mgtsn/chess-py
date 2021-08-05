@@ -39,7 +39,6 @@ class Game:
                 try:
                     p += f"{board[i][j].name} | "
                 except:
-                    # p += f"{squares[(i + j)%2]} | "
                     p += "  | "
             p += f"{j + 1}"
             print(p)
@@ -85,6 +84,8 @@ class Game:
                     if current_piece.color != player:
                         if current_piece.moves_from_position(
                                 board, [i, j]).__contains__(king_location):
+                            current_piece.moves_from_position(
+                                board, [i, j]).__contains__(king_location)
                             return True
         return False
 
@@ -163,7 +164,14 @@ class Game:
                 return
 
     def game_finished(self):
-        return False
+        if self.in_check(self.board, self.current_player):
+            if self.in_checkmate(self.board, self.current_player):
+                print(f"Player {self.current_player + 1} in checkmate!")
+                return True
+            else:
+                print(f"Player {self.current_player} in check!")
+                self.print_board(self.board)
+                return False
 
     # loop through player's turns taking input until game is finished
     def play(self):

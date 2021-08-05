@@ -136,10 +136,14 @@ class Piece:
                 while searching_branch:
                     if self.valid_target(board, [new_x_pos, new_y_pos]):
                         moves.append([new_x_pos, new_y_pos])
+                        if board[new_x_pos][new_y_pos] != []:
+                            searching_branch = False
                         new_x_pos += x
                         new_y_pos += y
+
                     else:
                         searching_branch = False
+
         return moves
 
     def legal_moves(self, board):

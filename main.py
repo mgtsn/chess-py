@@ -13,6 +13,8 @@ def main():
 
         game.switch_player()
 
+        finished = game.game_finished()
+
 
 if __name__ == "__main__":
     main()
