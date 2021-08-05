@@ -30,17 +30,18 @@ class Game:
         self.board = self.build_board()
 
     # display the board using the names of pieces, O for empty square
-    def print_board(self):
-        squares = ["□", "■"]
+    def print_board(self, board):
+        print("    A   B   C   D   E   F   G   H   ")
         print(f"   {'----' * 8}")
         for j in reversed(range(8)):
             p = f"{j + 1} | "
             for i in range(8):
                 try:
-                    p += f"{self.board[i][j].name} | "
+                    p += f"{board[i][j].name} | "
                 except:
                     # p += f"{squares[(i + j)%2]} | "
                     p += "  | "
+            p += f"{j + 1}"
             print(p)
             print(f"   {'----' * 8}")
         print("    A   B   C   D   E   F   G   H   ")
@@ -168,7 +169,7 @@ class Game:
     def play(self):
         finished = False
         while not finished:
-            self.print_board()
+            self.print_board(self.board)
             print(f"\nPlayer {self.current_player + 1}'s turn")
 
             self.get_player_move()
