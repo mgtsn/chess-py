@@ -152,6 +152,8 @@ class Game:
             print("Puts you in check")
             return False
 
+        if type(moving_piece) == Pawn:
+            moving_piece.can_move_double = False
         return True
 
     def get_player_move(self):
@@ -170,7 +172,6 @@ class Game:
                 return True
             else:
                 print(f"Player {self.current_player} in check!")
-                self.print_board(self.board)
                 return False
 
     # loop through player's turns taking input until game is finished

@@ -4,6 +4,10 @@ from .piece import *
 class Pawn(Piece):
     names = ["P", "p"]
 
+    def __init__(self, color):
+        super().__init__(color)
+        self.can_move_double = True
+
     def can_make_move(self, board, move):
         current = move[0]
         target = move[1]
@@ -34,10 +38,19 @@ class Pawn(Piece):
         if not range(0, 8).__contains__(new_y_pos):
             return moves
 
+        #looks two spaces ahead if has not moved yet
+        if self.can_move_double:
+            target = board[new_x_pos][new_y_pos + direction]
+            if target == []:
+                moves.append([new_x_pos, new_y_pos + direction])
+
+        #can move one space ahead if is empty
         target = board[new_x_pos][new_y_pos]
+
         if target == []:
             moves.append([new_x_pos, new_y_pos])
 
+        #can move diagonally forward if taking a piece
         for i in [-1, 1]:
             new_x_pos = position[0] + i
             if range(0, 8).__contains__(new_x_pos):
