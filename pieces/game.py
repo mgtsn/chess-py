@@ -64,7 +64,7 @@ class Game:
         new_board[current[0]][current[1]] = []
         return new_board
 
-    #return location of given player's king
+    # return location of given player's king
     def find_king(self, player, board):
         for i in range(8):
             for j in range(8):
@@ -74,7 +74,7 @@ class Game:
                         return [i, j]
         return 0
 
-    #Check if any of opponent's pieces can move to current player's king
+    # Check if any of opponent's pieces can move to current player's king
     def in_check(self, board, player):
         king_location = self.find_king(player, board)
         for i in range(8):
@@ -89,7 +89,7 @@ class Game:
                             return True
         return False
 
-    #look at each move each of player's pieces can make. If one moves out of check, then player is not in checkmate
+    # look at each move each of player's pieces can make. If one moves out of check, then player is not in checkmate
     def in_checkmate(self, board, player):
         for i in range(8):
             for j in range(8):
@@ -124,6 +124,7 @@ class Game:
             print("Incorrect Format")
         return formatted_move
 
+    # see if a given move will put you in check
     def puts_self_in_check(self, move, player):
         new_board = self.make_move(move)
         return self.in_check(new_board, player)
