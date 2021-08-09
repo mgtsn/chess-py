@@ -11,8 +11,6 @@ def main():
 
         game.get_player_move()
 
-        game.switch_player()
-
         finished = game.game_finished()
 
 

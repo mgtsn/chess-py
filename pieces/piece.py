@@ -9,6 +9,7 @@ class Piece:
         self.color = color
         self.name = self.names[color]
 
+    # true if target space is empty or your opponents piece
     def _valid_target(self, board, position):
         x = position[0]
         y = position[1]
