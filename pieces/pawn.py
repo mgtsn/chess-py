@@ -8,22 +8,22 @@ class Pawn(Piece):
         super().__init__(color)
         self.can_move_double = True
 
-    def can_make_move(self, board, move):
-        current = move[0]
-        target = move[1]
+    # def can_make_move(self, board, move):
+    #     current = move[0]
+    #     target = move[1]
 
-        if self.color == 0:
-            direction = 1
-        else:
-            direction = -1
+    #     if self.color == 0:
+    #         direction = 1
+    #     else:
+    #         direction = -1
 
-        if target[1] == current[1] + direction:
-            if target[0] == current[0] and board[target[0]][target[1]] == []:
-                return True
-            if target[0] == current[0] + 1 or target[1] == current[1] - 1:
-                if board[target[0]][target[1]] != []:
-                    return True
-        return False
+    #     if target[1] == current[1] + direction:
+    #         if target[0] == current[0] and board[target[0]][target[1]] == []:
+    #             return True
+    #         if target[0] == current[0] + 1 or target[1] == current[1] - 1:
+    #             if board[target[0]][target[1]] != []:
+    #                 return True
+    #     return False
 
     def moves_from_position(self, board, position):
         moves = []
