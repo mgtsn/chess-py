@@ -1,17 +1,12 @@
 from pieces import Game
-import copy
 
 
 def main():
     game = Game()
-    finished = False
-    while not finished:
+    while not game.finished:
         game.print_board(game.board)
         print(f"\nPlayer {game.current_player + 1}'s turn")
-
-        game.get_player_move()
-
-        finished = game.game_finished()
+        game.take_turn()
 
 
 if __name__ == "__main__":

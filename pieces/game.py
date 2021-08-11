@@ -27,6 +27,7 @@ class Game:
 
     def __init__(self):
         self.current_player = 0
+        self.finished = False
         self.board = self._build_board()
 
     # display the board using the names of pieces
@@ -147,19 +148,8 @@ class Game:
             moving_piece.can_move_double = False
         return True
 
-    #read and validate user input
-    def get_player_move(self):
-        while True:
-            player_move = []
-            while not player_move:
-                player_move = self._format_move(input("Enter your move: "))
-            if self._legal_move(player_move):
-                self.board = self._make_move(player_move)
-                self._switch_player()
-                return
-
     # check if current player is in checkmate, game ends if player is
-    def game_finished(self):
+    def _game_finished(self):
         if self._in_check(self.board, self.current_player):
             if self._in_checkmate(self.board, self.current_player):
                 print(f"Player {self.current_player + 1} in checkmate!")
@@ -167,3 +157,15 @@ class Game:
             else:
                 print(f"Player {self.current_player + 1} in check!")
                 return False
+
+    #r ead and validate user input
+    def take_turn(self):
+        while True:
+            player_move = []
+            while not player_move:
+                player_move = self._format_move(input("Enter your move: "))
+            if self._legal_move(player_move):
+                self.board = self._make_move(player_move)
+                self._switch_player()
+                self.finished = self._game_finished()
+                return
