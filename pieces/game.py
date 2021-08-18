@@ -152,13 +152,14 @@ class Game:
     def _game_finished(self):
         if self._in_check(self.board, self.current_player):
             if self._in_checkmate(self.board, self.current_player):
+                self.print_board(self.board)
                 print(f"Player {self.current_player + 1} in checkmate!")
                 return True
             else:
                 print(f"Player {self.current_player + 1} in check!")
                 return False
 
-    #r ead and validate user input
+    # read and validate user input
     def take_turn(self):
         while True:
             player_move = []
