@@ -6,7 +6,6 @@ class Pawn(Piece):
 
     def __init__(self, color):
         super().__init__(color)
-        self.can_move_double = True
 
     def moves_from_position(self, board, position):
         moves = []
@@ -22,7 +21,7 @@ class Pawn(Piece):
             return moves
 
         #looks two spaces ahead if has not moved yet
-        if self.can_move_double:
+        if not self.times_moved:
             target = board[new_x_pos][new_y_pos + direction]
             if target == []:
                 moves.append([new_x_pos, new_y_pos + direction])

@@ -52,6 +52,7 @@ class Game:
         current = move[0]
         target = move[1]
         new_board[target[0]][target[1]] = new_board[current[0]][current[1]]
+        new_board[target[0]][target[1]].moved()
         new_board[current[0]][current[1]] = []
         return new_board
 
@@ -144,8 +145,6 @@ class Game:
             print("Puts you in check")
             return False
 
-        if type(moving_piece) == Pawn:
-            moving_piece.can_move_double = False
         return True
 
     # check if current player is in checkmate, game ends if player is

@@ -8,6 +8,10 @@ class Piece:
     def __init__(self, color):
         self.color = color
         self.name = self.names[color]
+        self.times_moved = 0
+
+    def moved(self):
+        self.times_moved += 1
 
     # true if target space is empty or your opponents piece
     def _valid_target(self, board, position):
